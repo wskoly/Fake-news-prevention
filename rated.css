@@ -1,0 +1,88 @@
+.container{
+    width: 50%;
+    margin: 0 auto;
+  }
+  @keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  @-webkit-keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  @-moz-keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  @-o-keyframes load{
+    from {
+      width: 0%
+    }
+  }
+  
+  .bar{
+    background-color: #EEE;
+    padding: 2px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #FFF;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  }
+  .bar::before{
+    content:  attr(data-skill);
+    background-color: #fbff14;
+    display: inline-block;
+    padding: 5px 0 5px 10px;
+    border-radius: inherit;
+    animation: load 2s 0s;
+    -webkit-animation: load 2s 0s;
+    -moz-animation: load 2s 0s;
+    -o-animation: load 2s 0s;
+  }
+  .bar.zero::before{
+    background-color: #969696;
+  }
+  .bar.back::before{
+    background-color: #ed1000;
+  }
+  .bar.front::before{
+    background-color: #07c900;
+  }
+  .bar.zero::before{
+    width: calc(100% - 10px);
+  }
+  .bar.one::before{
+    width: calc(10% - 10px);
+  }
+  .bar.two::before{
+    width: calc(20% - 10px);
+  }
+  .bar.three::before{
+    width: calc(10% - 10px);
+  }
+  .bar.four::before{
+    width: calc(40% - 10px);
+  }
+  .bar.five::before{
+    width: calc(50% - 10px);
+  }
+  .bar.six::before{
+    width: calc(60% - 10px);
+  }
+  .bar.seven::before{
+    width: calc(70% - 10px);
+  }
+  .bar.eight::before{
+    width: calc(80% - 10px);
+  }
+  .bar.nine::before{
+    width: calc(90% - 10px);
+  }
+  .bar.ten::before{
+    width: calc(100% - 10px);
+  }

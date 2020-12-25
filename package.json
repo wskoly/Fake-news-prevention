@@ -1,0 +1,11 @@
+{
+  "name": "fake-news-detection",
+  "version": "1.0.0",
+  "description": "Final year project under supervision of Abdullah Al Omar.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Wahid Sadique Koly",
+  "license": "ISC"
+}

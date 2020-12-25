@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+	<script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Create news</h1>
+
+        <h2 id="news"></h2>
+
+        <label for="name" class="col-lg-2 control-label">news title</label>
+        <input id="title" type="text" size="50">
+
+        <label for="name" class="col-lg-2 control-label">news</label>
+        <textarea id="message"></textarea>
+
+        <label for="name" class="col-lg-2 control-label">news area</label>
+        <input id="area" type="text">
+
+        <button id="button">create news</button>
+
+
+    </div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="initiate.js"></script>
+
+    <script>
+        $("#button").click(function() {
+            uap.createNews($("#title").val(), $("#message").val(),$("#area").val(),{from: web3.eth.accounts[0], gas:3000000});
+            alert('news created titled:'+($("#title").val()));
+            location.reload();
+        });
+    </script>
+
+</body>
+</html>

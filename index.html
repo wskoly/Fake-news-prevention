@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=2.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+
+	<link rel="stylesheet" type="text/css" href="rating.css">
+	<link rel="stylesheet" type="text/css" href="rated.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+
+<body>
+	<h1 align="center" id="accNum"></h1>
+	<div class="select" style="float: right;">
+		<select id="selectAcc" onchange="selectAcc();">
+			<option hidden disabled selected>Select account</option>
+			<option value="0">Acount 1</option>
+			<option value="1">Acount 2</option>
+			<option value="2">Acount 3</option>
+			<option value="3">Acount 4</option>
+			<option value="4">Acount 5</option>
+			<option value="5">Acount 6</option>
+			<option value="6">Acount 7</option>
+			<option value="7">Acount 8</option>
+			<option value="8">Acount 9</option>
+			<option value="9">Acount 10</option>
+		</select>
+	    </div>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="initiate.js"></script>
+
+		<script>
+			var account = getStoredValue('account');
+			//alert(account);
+			document.getElementById('accNum').innerHTML= 'Newsfeed of Account '+account;
+			getNewsCount();
+			function getNewsCount() {
+				uap.getNewsCount(function (error, result) {
+					if (!error) {
+						console.log("result:" + result);
+						getNews(result);
+					}
+					else
+						console.log(error);
+				})
+			}
+			function getNews(newsCount) {
+				console.log('start');
+				var i = newsCount;
+				function step() {
+					if (i > 0) {
+						uap.getNews(i, function (error, result) {
+							if (!error) {
+								var newsTitle = document.createElement("h1");
+								newsTitle.innerHTML = result[0];
+								document.body.appendChild(newsTitle);
+								var news = document.createElement("p");
+								news.innerHTML = result[1];
+								document.body.appendChild(news);
+								if (result[4]) {
+									var trueness = document.createElement("div");
+									if (result[3] == 0) {
+										trueness.setAttribute("class", 'bar back one');
+										trueness.setAttribute("data-skill", "Falseness: 100%");
+									}
+									if (result[3] == 1) {
+										trueness.setAttribute("class", 'bar back one');
+										trueness.setAttribute("data-skill", "Falseness: 90%");
+									}
+									if (result[3] == 2) {
+										trueness.setAttribute("class", 'bar back two');
+										trueness.setAttribute("data-skill", "Falseness: 80%");
+									}
+									if (result[3] == 3) {
+										trueness.setAttribute("class", 'bar back three');
+										trueness.setAttribute("data-skill", "Falseness: 70%");
+									}
+									if (result[3] == 4) {
+										trueness.setAttribute("class", 'bar back four');
+										trueness.setAttribute("data-skill", "Falseness: 60%");
+									}
+									if (result[3] == 5) {
+										trueness.setAttribute("class", 'bar five');
+										trueness.setAttribute("data-skill", "Controversial");
+									}
+									if (result[3] == 6) {
+										trueness.setAttribute("class", 'bar front six');
+										trueness.setAttribute("data-skill", "Trueness: 60%");
+									}
+									if (result[3] == 7) {
+										trueness.setAttribute("class", 'bar front seven');
+										trueness.setAttribute("data-skill", "Trueness: 70%");
+									}
+									if (result[3] == 8) {
+										trueness.setAttribute("class", 'bar front eight');
+										trueness.setAttribute("data-skill", "Trueness: 80%");
+									}
+									if (result[3] == 9) {
+										trueness.setAttribute("class", 'bar front nine');
+										trueness.setAttribute("data-skill", "Trueness: 90%");
+									}
+									if (result[3] == 10) {
+										trueness.setAttribute("class", 'bar front ten');
+										trueness.setAttribute("data-skill", "Trueness: 100%");
+									}
+									document.body.appendChild(trueness);
+								}
+								else {
+									var trueness = document.createElement("div");
+									trueness.setAttribute("class", 'bar zero zero');
+									trueness.setAttribute("data-skill", "Not Rated YeT");
+									document.body.appendChild(trueness);
+								}
+								/*var rate = document.createElement("SELECT");
+								var id = 'koly' + i;
+								rate.setAttribute("id", id);
+								document.body.appendChild(rate);
+								var j = 1;
+								opVal();
+								function opVal() {
+									if (j <= 10) {
+										var option = document.createElement("option");
+										option.setAttribute("value", j);
+										var t = document.createTextNode(j);
+										option.appendChild(t);
+										document.getElementById(id).appendChild(option);
+										j++;
+										opVal();
+									}
+								}*/
+								var span = document.createElement("span");
+								span.classList.add('star-cb-group');
+								for (k = 10; k > 0; k--) {
+									span.innerHTML += "<input type='radio' id='rating-" + i + k + "' name='rating" + i + "' value='" + k + "' /><label for='rating-" + i + k + "'></label>";
+								}
+								span.innerHTML += "<input type='radio' id='rating-" + i + "0' name='rating' value='0' class='star-cb-clear' /><label for='rating-" + i + "0'></label>";
+								document.body.appendChild(span);
+								var submit = document.createElement("button");
+								var id = 'button' + i;
+								submit.setAttribute("id", id);
+								submit.setAttribute("class", "button");
+								var onClick = '{setRating(' + i + ')}';
+								submit.setAttribute("onclick", onClick);
+								var n = document.createTextNode("rate it");
+								submit.appendChild(n);
+								document.body.appendChild(submit);
+								i--;
+							}
+							else { console.log(error); }
+							console.log(i);
+							step();
+						});
+					}
+				} step();
+			}
+			function selectAcc() {
+				var selectBox = document.getElementById("selectAcc");
+				var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+				storeValue('account', selectedValue);
+				location.reload();
+				//alert(selectedValue);
+			}
+			function setRating(id) {
+				var newsR = 'rating' + id;
+				var e = document.getElementsByName(newsR);
+				var rVal;
+				for (i = 0; i < e.length; i++) {
+					if (e[i].checked) {
+						rVal = e[i].value;
+					}
+				}
+				var newsId = id.toString();
+				var ratingVal = rVal.toString();
+				alert('news:' + id + 'rating given:' + ratingVal + 'nId' + newsId);
+				uap.giveRating(newsId, ratingVal, { from: web3.eth.accounts[account], gas: 3000000 });
+				location.reload();
+			}
+			function storeValue(key, value) {
+				if (localStorage) {
+					localStorage.setItem(key, value);
+				} else {
+					$.cookies.set(key, value);
+				}
+			}
+
+			function getStoredValue(key) {
+				if (localStorage) {
+					return localStorage.getItem(key);
+				} else {
+					return $.cookies.get(key);
+				}
+			}
+ 		//uap.createValidor('7470',{from: web3.eth.accounts[0], gas:3000000});
+ 		//uap.createValidor('7471',{from: web3.eth.accounts[2], gas:3000000});
+ 		//uap.giveRating('1', '10',{from: web3.eth.accounts[1], gas:3000000});
+ 		//uap.giveRating('1', '1',{from: web3.eth.accounts[2], gas:3000000});
+ 		//uap.validatorWeight({from: web3.eth.accounts[9], gas:3000000});
+		</script>
+</body>
+
+</html>
